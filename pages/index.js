@@ -2,8 +2,12 @@ import Head from "next/head";
 //COMPONENTS and PAGES
 import Header from "../components/Header";
 import Feed from "../components/Feed";
-
+import Modal from "../components/Modal";
+//recoil
+import { useRecoilValue } from "recoil";
+import { modalState } from "../atoms/modelAtom";
 export default function Home() {
+  const open = useRecoilValue(modalState);
   return (
     <div>
       <Head>
@@ -12,11 +16,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* SKETCHING THE BUILD...
-      Header 
-      Feed 
+      Header done
+      Feed done
       Modal */}
       <Header />
       <Feed />
+      <Modal />
     </div>
   );
 }

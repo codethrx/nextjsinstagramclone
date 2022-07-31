@@ -14,10 +14,14 @@ import { HomeIcon } from "@heroicons/react/solid";
 import { useSession, signOut, signIn } from "next-auth/react";
 //router
 import { useRouter } from "next/router";
+//recoil
+import { useRecoilState } from "recoil";
+import { modalState } from "../atoms/modelAtom";
 function Header() {
   const { data } = useSession();
   const router = useRouter();
-  console.log(data);
+  const [open, setOpen] = useRecoilState(modalState);
+  // console.log(open);
   return (
     <div className="sticky top-0 left-0 w-[100%] shadow-sm z-50 py-2">
       <div className="mx-[30px] flex justify-between bg-white max-w-10xl  xs:mx-auto">
@@ -61,7 +65,12 @@ function Header() {
                   3
                 </div>
               </div>
-              <PlusCircleIcon className="navBtn" />
+              <PlusCircleIcon
+                onClick={() => {
+                  setOpen(!open);
+                }}
+                className="navBtn"
+              />
               <UserGroupIcon className="navBtn" />
               <HeartIcon className="navBtn" />
               <img
