@@ -12,3 +12,9 @@ body {
 * {
   box-sizing: border-box;
 }
+
+@layer components {
+  .navBtn {
+    @apply hidden h-6 md:inline-flex cursor-pointer transition-all hover:scale-125 ease-out duration-150;
+  }
+}
