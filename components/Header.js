@@ -10,7 +10,14 @@ import {
   MenuIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
+//getting the users
+import { useSession, signOut, signIn } from "next-auth/react";
+//router
+import { useRouter } from "next/router";
 function Header() {
+  const { data } = useSession();
+  const router = useRouter();
+  console.log(data);
   return (
     <div className="sticky top-0 left-0 w-[100%] shadow-sm z-50 py-2">
       <div className="mx-[30px] flex justify-between bg-white max-w-10xl  xs:mx-auto">
@@ -46,20 +53,34 @@ function Header() {
           {" "}
           <HomeIcon className="navBtn" />
           <MenuIcon className="w-10 h-6 md:hidden cursor-pointer" />
-          <div className="navBtn relative">
-            <PaperAirplaneIcon className="navBtn rotate-45" />
-            <div className="absolute -right-1 -top-0 rounded-full bg-red-400 text-xs h-3 w-3 flex items-center justify-center animate-pulse text-white">
-              3
-            </div>
-          </div>
-          <PlusCircleIcon className="navBtn" />
-          <UserGroupIcon className="navBtn" />
-          <HeartIcon className="navBtn" />
-          <img
-            src="https://links.papareact.com/3ke"
-            alt="profile-pic"
-            className="rounded-full h-10 cursor:pointer cursor-pointer"
-          />
+          {data ? (
+            <>
+              <div className="navBtn relative">
+                <PaperAirplaneIcon className="navBtn rotate-45" />
+                <div className="absolute -right-1 -top-0 rounded-full bg-red-400 text-xs h-3 w-3 flex items-center justify-center animate-pulse text-white">
+                  3
+                </div>
+              </div>
+              <PlusCircleIcon className="navBtn" />
+              <UserGroupIcon className="navBtn" />
+              <HeartIcon className="navBtn" />
+              <img
+                onClick={signOut}
+                src={data?.user.image}
+                alt="profile-pic"
+                className="rounded-full h-10 cursor:pointer cursor-pointer"
+              />
+            </>
+          ) : (
+            <button
+              // onClick={() => {
+              //   router.push("/auth/signin");
+              // }}
+              onClick={signIn}
+            >
+              Signin
+            </button>
+          )}
         </div>
       </div>
     </div>
